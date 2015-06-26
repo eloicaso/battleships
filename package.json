@@ -1,0 +1,30 @@
+{
+  "name": "battleships",
+  "version": "0.0.1",
+  "description": "Simple Battleships Game using MarionetteJS, BackboneJS and Browserify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eloicaso/battleships.git"
+  },
+  "keywords": [
+    "marionette",
+    "browserify",
+    "backbone"
+  ],
+  "author": "Eloi Carbo <eloicaso@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eloicaso/battleships/issues"
+  },
+  "homepage": "https://github.com/eloicaso/battleships#readme",
+  "devDependencies": {
+    "backbone": "^1.2.1",
+    "backbone.marionette": "^2.4.2",
+    "jquery": "^2.1.4",
+    "requirejs": "^2.1.18"
+  }
+}
