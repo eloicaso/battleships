@@ -12,11 +12,17 @@ WATER_SQ = '0'
 SHIP_SQ = '1'
 HIT_SQ = 'X'
 MISS_SQ = 'M'
+LOOPS_MAX = 5000
+
+//Hint values ('sugar' to avoid .length calls)
+var row_length = ROW_NUMBER - 1
+var column_length = COLUMN_NUMBER - 1
 
 // Create the user's board
 var gameBoard = []
 
-// Initialize the Board to water/empty value
+
+// Initialize the (ROW_NUMBER * COLUMN_NUMBER) Board to water/empty value
 for (var x = 0; x < ROW_NUMBER; x++) {
   gameBoard[x] = []
   for (var y = 0; y<COLUMN_NUMBER; y++) {
@@ -24,9 +30,9 @@ for (var x = 0; x < ROW_NUMBER; x++) {
   }
 }
 
-/* Clone the board in order to obtain the shadow board
-* (which will include the hidden map with WATER/SHIP values).
-* Using slice(0) to improve performance.
+/* Clone the water/empty board in order to obtain the shadow board
+* (which will include the random WATER/SHIP information values).
+* Using slice(0) to improve performance [TODO: Check this].
  */
 var shadowBoard = gameBoard.slice(0)
 
@@ -42,6 +48,7 @@ function randomCoords() {
   var yPos = Math.floor(Math.random() * 10)
   return {x: xPos, y: yPos, o: orientation}
 }
+
 
 /*
 * setShipPosition ( {number xCoord, number yCoord, boolean orientation},
@@ -70,15 +77,19 @@ function setShipPosition(shPos, size) {
 * does not collide with other ships
 * Return - Boolean
 */
-function checkShipPosition (shPos, size) {
+function checkAndSetShipPosition (shPos, size) {
   var x = shPos.x
   var y = shPos.y
-  for (var i = 0; i < size; i++) {
-    // Check if our ship exceeds table limits
-    if(x === 10 || y === 10) return false
+  var vertical = shPos.o
 
+  // Check if the coordinates + its orientation does not fit to the GRID size.
+  if ((size + x) > row_length && !vertical) return false
+  if ((size + y) > column_length && vertical) return false
+
+  // Check the shadowBoard contents
+  for (var i = 0; i < size; i++) {
     // Check if there is a ship in x-y position
-    if (shadowBoard[x][y] != WATRER_SQ) return false
+    if (shadowBoard[x][y] != WATER_SQ) return false
 
     // Add 1 square according to orientation
     if (shPos.o === 0) {
@@ -93,12 +104,53 @@ function checkShipPosition (shPos, size) {
 
 
 /*
+* setShip ( number size )
+* This function loops until it finds a matching position for the ship, or returns false after a fixed number of tries, where its supposed not to fit in the GRID
+*/
+function setShip(size) {
+  var match = false
+  var loops = 0
+  while (!match && loops <= LOOPS_MAX) {
+    match = checkAndSetShipPosition(randomCoords(), size)
+    loops++
+  }
+  if(loops > LOOPS_MAX) return false
+  else return true
+}
+
+
+/*
+* printDistribution ( )
+* This function only shows the created map in a log style. Debuggin purpose only
+* Return -
+*/
+function printDistribution() {
+  console.log(shadowBoard)
+}
+
+
+/*
 * randomDistribution ( {number Battleship, number Destroyer} )
 * This function is the responsible to distribute all the SHIPS in the shadowBoard.
 * Return - Boolean
 */
-function randomDistribution (SHIPS) {
-// TODO: if this function returns false means that something went wrong (maybe add a maximum number of tries in case CONSTANT values are not fittable)
+function randomDistribution () {
+/* TODO: if this function returns false means that something went wrong (maybe add a maximum number of tries in case CONSTANT values are not fittable) */
+  var battleType = SHIPS.Battleship
+  var destrType = SHIPS.Destroyer
 
-return true
+  // Set first biggest ship
+  if(battleType > 0) {
+    for (var i = 0; i < battleType; i++) {
+      if(!setShip(BATTLESHIP)) return false
+    }
+  }
+
+  if(destrType > 0) {
+    for (var i = 0; i < destrType; i++) {
+      if(!setShip(DESTROYER)) return false
+    }
+  }
+  printDistribution()
+  return true
 }
