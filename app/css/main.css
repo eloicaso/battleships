@@ -1,0 +1,115 @@
+body {
+  font-family: "Lucida Console", Monaco, monospace;
+  background-color: #F8F8F8;
+}
+
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+} 
+
+.bs-header {
+  position: relative;
+  padding: 30px 15px;
+  font-size: 20px;
+  color: #cdbfe3;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0,0,0,.1);
+  background-color: #AEC6CF;
+  background-image: -webkit-linear-gradient(top, #563d7c 0%, #AEC6CF 100%);
+  background-image: linear-gradient(to bottom, #563d7c 0%, #AEC6CF 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endColorstr='#AEC6CF', GradientType=0);
+}
+
+
+.bs-header h1 {
+  margin-top: 0;
+  color: whitesmoke;
+  font-weight: bold;
+}
+
+.bs-header p {
+  color: whitesmoke;
+  margin-bottom: 0;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.board-div {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.main-container div {
+  float: left;
+  clear: none;
+}
+
+.square {
+  border:solid 1px #4A777A;
+  width: 100%;
+  height: 100%;
+}
+
+.board-container {
+  margin: auto;
+  padding: 0;
+  background: #AEC6CF;
+  border: solid 3px #2F4F4F;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.board-el {
+  list-style-type: none;
+  align-self:  auto;
+  align-items: baseline;
+  align-content: center;
+  flex: auto;
+  width: 10%;
+  height: 10%;
+
+}
+
+.bullets {
+  list-style-type: circle;
+  text-align: justify;
+}
+
+.bullets li {
+  font-weight: bold;
+  font-size: medium;
+}
+
+.new-game {
+  margin-top: 1em;
+}
+
+.color-blue {
+  background: url("/public/fail.png");
+  background-size: contain;
+  background-color: white;
+}
+
+.color-red {
+  background: url("/public/explosion.png");
+  background-size: contain;
+  background-color: #FF9273;
+}
+
+.color-sunk {
+  background: url("/public/skull.png");
+  background-size: auto;
+  background-color: white;
+}

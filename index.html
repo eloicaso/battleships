@@ -1,16 +1,75 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
   <head>
-    <title>BattleShips!</title>
-
-    <link href="./assets/css/index.less" rel="stylesheet">
-
-    <script src="./assets/javascript/index.js"></script>
-    <script src="./logic/battleship.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="public/battleship.gif" />
+    <title>BattleShips</title>
+    <link href="vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="app/css/main.css" rel="stylesheet">
   </head>
   <body>
-    <div id="content">
+    <header class="bs-header">
+      <div class="container">
+        <h1>Battleships. The Game.</h1>
+        <p>Are you ready for war?</p>
+      </div>
+    </header>
+    <div class="container">
+        <div class="main-container">
+          <!-- Here goes the templates -->
+        </div>
     </div>
+
+    <script type="text/template" id="tpl-board">
+      <h2 class="page-header text-center">Game Board</h2>
+      <div id="aside">
+        <h2 class="page-header">How to play?</h2>
+
+        <ol class="bullets">
+          <li>
+            The enemy's fleet has arrived to our lands.
+          </li>
+          <li>
+            Click on the squares of the Map to order a<br />missile attack to that position.
+          </li>
+          <li>
+            Sink all the enemy ships to win!
+          </li>
+        </ol>
+        <a href="#play" class="btn btn-info new-game">New Game</a>
+
+      </div>
+      <ol class="board-container"></ol>
+
+    </script>
+
+    <script type="text/template" id="tpl-square">
+      <!-- The getBackground() function will return the className which will fill square's background -->
+      <div id="<%- id %>" class="fit-square square <%= getBackground() %>">
+      </div>
+    </script>
+
+    <script src="vendor/jquery/jquery.js"></script>
+    <script src="vendor/underscore/underscore.js"></script>
+    <script src="vendor/backbone/backbone.js"></script>
+    <script src="vendor/marionette/lib/backbone.marionette.js"></script>
+    <script src="vendor/Backbone.localStorage/backbone.localStorage.js"></script>
+
+    <script src="app/js/game/battleships.js"></script>
+    <script src="app/js/app.js"></script>
+    <script src="app/js/models/square.js"></script>
+    <script src="app/js/collections/board.js"></script>
+    <script src="app/js/views/square.js"></script>
+    <script src="app/js/views/board.js"></script>
+    <script src="app/js/controller.js"></script>
+    <script src="app/js/router.js"></script>
+
+    <script>
+      $(function() {
+        Battleships.start()
+      })
+    </script>
   </body>
 </html>

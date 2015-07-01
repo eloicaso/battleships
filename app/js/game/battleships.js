@@ -1,11 +1,11 @@
 /*
-*   Battleship plain JS logic
+*   Battleship JS logic
 *   Eloi Carbo 2015 - MIT License
 */
 
 // Specify game CONSTANTS
-ROW_NUMBER = 10
-COLUMN_NUMBER = 10
+ROWS_NUMBER = 10
+COLUMNS_NUMBER = 10
 BATTLESHIP = 5 // squares
 DESTROYER = 4 // squares
 SHIPS = {"Battleship": 1, "Destroyer": 2}
@@ -16,12 +16,33 @@ MISS_SQ = 'M'
 LOOPS_MAX = 5000
 
 /* Begining of hint values */
-// 'sugar' to avoid .length calls
-var row_length = ROW_NUMBER - 1
-var column_length = COLUMN_NUMBER - 1
-// # of: ship squares destroyed, pending, missed, hit and accuracy achieved
-var destroyedSq, aliveSq, missedSq, accuracy
+// 'sugar' to avoid repetitive .length calls in initialization functions
+var row_length = ROWS_NUMBER - 1
+var column_length = COLUMNS_NUMBER - 1
+// # of: ship squares destroyed, pending or missed. Number of shoots made
+var destroyedSq, aliveSq, missedSq, totalShoots
 /* End of hint Values */
+
+
+/*
+* getTotalShoots ( )
+* This function returns the total (CORRECT) shoots made by the user
+* Return the totalSh value
+*/
+function getTotalShoots() {
+  return totalShoots
+}
+
+
+/*
+* getAliveSq ( )
+* This function returns the total SHIP squares that are not yet hit by the user
+* Return the AliveSq value
+*/
+function getAliveSq() {
+  return aliveSq
+}
+
 
 /* Create the game and shadow boards:
 * gameBoard will contain all hits/misses from user's interaction
@@ -32,23 +53,27 @@ var shadowBoard = []
 
 
 /*
-* initializeHintValues ( number destroyed, number alive, number missed,
-* number accuracy)
-* This function initializes to 0 the hint values
+* initializeHintValues ( number destroyed, number alive, number missed )
+* This function initializes to 0 the hint values and also sets the number
+* of existing alive ship squares.
 */
-function initializeHintValues (destroyed, alive, mised, accuracy) {
-  destroyed, alive, mised, accuracy = 0
+function initializeHintValues () {
+  destroyedSq = 0
+  missedSq = 0
+  totalShoots = 0
+  // Returns the total # of ship squares
+  aliveSq = ( SHIPS.Battleship * BATTLESHIP ) + ( SHIPS.Destroyer * DESTROYER )
 }
 
 
 /*
 * initializeBoard ( array[][] board )
-* Initialize the (ROW_NUMBER * COLUMN_NUMBER) Board to water/empty value
+* Initialize the (ROWS_NUMBER * COLUMNS_NUMBER) Board to water/empty value
 */
 function initializeBoard(board) {
-  for (var x = 0; x < ROW_NUMBER; x++) {
+  for (var x = 0; x < ROWS_NUMBER; x++) {
     board[x] = []
-    for (var y = 0; y<COLUMN_NUMBER; y++) {
+    for (var y = 0; y < COLUMNS_NUMBER; y++) {
       board[x][y] = WATER_SQ
     }
   }
@@ -186,6 +211,16 @@ function randomDistribution () {
 
 
 /*
+* getContent( number x, number y )
+* This function returns the content of the GameBoard in the x,y position
+* Returns a value (WATER_SQ, MISS_SQ or HIT_SQ)
+*/
+function getContent(x, y) {
+  return gameBoard[x][y]
+}
+
+
+/*
 * checkAndHit ( number x, number y)
 * This function uses x and y values to check shadowBoard contents in that
 * position and print it in the gameBoard
@@ -193,8 +228,15 @@ function randomDistribution () {
 function checkAndHit(x, y) {
   if (gameBoard[x][y] !== WATER_SQ) return false
   else {
-    if (shadowBoard[x][y] === WATER_SQ) gameBoard[x][y] = MISS_SQ
-    else gameBoard[x][y] = HIT_SQ
+    if (shadowBoard[x][y] === WATER_SQ) {
+     gameBoard[x][y] = MISS_SQ
+     missedSq++
+    } else {
+    gameBoard[x][y] = HIT_SQ
+    destroyedSq++
+    aliveSq--
+    }
+    totalShoots++
   }
   return true
 }
@@ -224,4 +266,20 @@ function initializeGame () {
   initBoards()
   randomDistribution()
   return true
+}
+
+
+/*
+* gameBoardToJSON( )
+* This function returns an array of Square initialized items.
+* return data - Array of square items.
+*/
+function gameBoardToJSON(){
+  var data = []
+  for(var x = 0; x < ROWS_NUMBER; x++) {
+    for(var y = 0; y < COLUMNS_NUMBER; y++) {
+      data.push({id: x + '' + y, x: x, y: y, clicked: false, content: WATER_SQ})
+    }
+  }
+  return data
 }
