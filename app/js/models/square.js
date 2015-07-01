@@ -1,3 +1,8 @@
+/*
+* This model contains the information regarding each square represented in the
+* Game Board. Initially it is filled with "non-clicked Water" information.
+* During the game, it will be modified by user's clicks 'checkSquare' event.
+*/
 Battleships.Models.Square = Backbone.Model.extend({
   defaults: {
     id: '',
@@ -10,13 +15,12 @@ Battleships.Models.Square = Backbone.Model.extend({
   initialize: function() {},
 
   checkSquare: function(x, y) {
-    if(hitSquare(x, y)){
-      this.set('content', getContent(x, y))
-      this.set('clicked', true)
-      return true
-    } else {
-      return false
-    }
+    return hitSquare(x, y)
+  },
+
+  modifySquare: function(content) {
+    this.set('content', content)
+    this.set('clicked', true)
   }
 
 })

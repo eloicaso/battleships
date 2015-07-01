@@ -5,7 +5,7 @@ var Battleships = new Marionette.Application({
 })
 
 Battleships.addRegions({
-  mainRegion: '.main-container'
+  mainRegion: '.js-main-container'
 })
 
 Battleships.addInitializer(function(data) {
