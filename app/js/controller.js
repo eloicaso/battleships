@@ -57,7 +57,7 @@ Battleships.Controller = Marionette.Controller.extend({
     }
     if(getAliveSq() === 0){
       var accuracy = Math.floor((getDestroyedSq() / getTotalShoots())  * 100)
-      message = 'Congratulations! You won!\nYour scores are:\nTotal shoots: ' + getTotalShoots() + '\nTotal misses: ' + getMissedSq() + '\nAccuracy: ' + accuracy + '%\nPress the New Game button restart!'
+      message = 'Congratulations! You won!\nYour scores are:\nTotal shoots: ' + getTotalShoots() + '\nTotal misses: ' + getMissedSq() + '\nAccuracy: ' + accuracy + '%\nPress the New Game button to restart!'
     }
 
     if(message) window.alert(message)
