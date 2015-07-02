@@ -87,6 +87,16 @@ function getAliveSq() {
 }
 
 
+/*
+* getAccuracy ( )
+* This function returns the % of accuracy achieved in this game by the user.
+* Return the calculated accuracy value
+*/
+function getAccuracy() {
+  return Math.floor((getDestroyedSq() / getTotalShoots())  * 100)
+}
+
+
 /* Create the game and shadow boards:
 * gameBoard will contain all hits/misses from user's interaction
 * shadowBoard will contain the randomized distribution of ships

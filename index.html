@@ -7,48 +7,51 @@
     <link rel="shortcut icon" href="assets/battleship.gif" />
     <title>BattleShips</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link href="app/css/app.less" type="text/css" rel="stylesheet/less">
+    <link href="css/app.css" type="text/css" rel="stylesheet">
   </head>
   <body>
+    <!-- Simple title -->
     <header class="bs-header">
         <h1>Battleships. The Game.</h1>
         <p>Are you ready for war?</p>
     </header>
     <div class="container">
         <div class="js-main-container">
-          <!-- Here goes the templates -->
+          <!-- Here goes the App contents -->
         </div>
     </div>
 
-    <script type="text/template" id="tpl-board">
-      <h2 class="page-header text-center">Game Board</h2>
-      <div id="aside">
-        <h2 class="page-header">How to play?</h2>
-
-        <ol class="bullets">
-          <li>
-            The enemy's fleet has arrived to our lands.
-          </li>
-          <li>
-            Click on the map's squares to order a<br />missile attack to that position.
-          </li>
-          <li>
-            Sink all the enemy's ships to win!
-          </li>
-        </ol>
-        <a href="#play" class="btn btn-info js-new-game">New Game</a>
-
-      </div>
-      <ol class="js-board-container"></ol>
-
-    </script>
-
+    <!-- Square Underscore template -->
     <script type="text/template" id="tpl-square">
-      <!-- The getBackground() function will return the className which will fill square's background -->
       <div id="<%- id %>" class="js-square <%= getBackground() %>">
       </div>
     </script>
 
+    <!-- Board Underscore template -->
+    <script type="text/template" id="tpl-board">
+      <h2 class="page-header text-center">Game Board</h2>
+      <!-- Static game description -->
+      <div id="aside">
+        <h2 class="page-header">How to play?</h2>
+        <ol class="bullets">
+          <li>
+            The enemy&#39;s fleet has arrived to our lands.
+          </li>
+          <li>
+            Click on the map&#39;s squares to order a<br />missile attack to that position.
+          </li>
+          <li>
+            Sink all the enemy&#39;s ships to win!
+          </li>
+        </ol>
+        <!-- New Game button handled by the App. -->
+        <a href="#play" class="btn btn-info js-new-game">New Game</a>
+      </div>
+      <!-- This <ol> will contain the list of Squares that will compose the game Board -->
+      <ol class="js-board-container"></ol>
+    </script>
+
+    <!-- Vendor Scripts -->
     <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
@@ -56,15 +59,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.16/backbone.localStorage-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
 
-    <script src="app/js/game/battleships.js"></script>
-    <script src="app/js/app.js"></script>
-    <script src="app/js/models/square.js"></script>
-    <script src="app/js/collections/board.js"></script>
-    <script src="app/js/views/square.js"></script>
-    <script src="app/js/views/board.js"></script>
-    <script src="app/js/controller.js"></script>
-    <script src="app/js/router.js"></script>
+    <!-- Compiled source scripts -->
+    <script src="js/battleships.js"></script>
 
+    <!-- Initialization of the App -->
     <script>
       $(function() {
         Battleships.start()

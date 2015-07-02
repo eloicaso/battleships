@@ -1,3 +1,8 @@
+/*
+* Battleships MarionetteApp. Battleships will contain and work as the Marionette
+* Backbone application and will be in charge of responding user petitions and
+* gather the rest of the components.
+*/
 var Battleships = new Marionette.Application({
   Models: {},
   Collections: {},

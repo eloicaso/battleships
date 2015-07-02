@@ -1,9 +1,9 @@
 var gulp = require('gulp')
-var plumber = require('gulp-plumber')
 var concat = require('gulp-concat')
 var uglify = require('gulp-uglify')
 var minify = require('gulp-minify-css')
 var less = require('gulp-less')
+var changed = require('gulp-changed')
 var minifyHTML = require('gulp-minify-html')
 
 var environment = 'development'
@@ -13,43 +13,46 @@ var paths = {
   assets: './assets/'
 }
 
-gulp.task('set-production', function() {
-  environment = 'production'
-})
-
 gulp.task('assets', function() {
   gulp.src(paths.assets + "**")
-  .pipe(plumber())
-  .pipe(gulp.dest(paths.dest))
+  .pipe(gulp.dest(paths.dest + 'assets/'))
 })
 
 gulp.task('scripts', function() {
-  stream = gulp.src(path.src + 'js/**/*js')
-  .pipe(plumber())
-  .pipe(concat('all.js'))
-  .pipe(gulp.dest(paths.dest + 'js/'))
+  return gulp.src([
+    paths.src + 'js/game/*js',
+    paths.src + 'js/app.js',
+    paths.src + 'js/models/*js',
+    paths.src + 'js/collections/*js',
+    paths.src + 'js/views/square.js',
+    paths.src + 'js/views/board.js',
+    paths.src + 'js/router.js',
+    paths.src + 'js/controller.js'
+  ])
 
-  if(environment === 'production') stream.pipe(uglify())
+  .pipe(concat('battleships.js'))
+  .pipe(uglify())
+  .pipe(gulp.dest(paths.dest + 'js/'))
 })
 
 gulp.task('styles', function() {
   return gulp.src(paths.src + '/css/**/*.less')
   .pipe(less())
   .pipe(minify())
-  .pipe(gulp.dest(path.dest + 'css/'))
+  .pipe(gulp.dest(paths.dest + 'css/'))
 })
 
 gulp.task('html', function() {
   gulp.src('index.html')
     .pipe(changed(paths.dest))
     .pipe(minifyHTML())
-    .pipe(gulp.dest(paths.dest));
-});
+    .pipe(gulp.dest(paths.dest))
+})
 
 gulp.task('watch', function () {
-  gulp.watch(paths.src + 'js/**/*.js', ['scripts']);
-  gulp.watch(paths.src + 'css/**/*.less', ['styles']);
-  gulp.watch('index.html', ['html']);
+  gulp.watch(paths.src + 'js/**/*.js', ['scripts'])
+  gulp.watch(paths.src + 'css/**/*.less', ['styles'])
+  gulp.watch('index.html', ['html'])
 
   gulp.watch([
       paths.dest + 'js/**/*.js',
@@ -59,5 +62,4 @@ gulp.task('watch', function () {
 })
 
 gulp.task('compile', ['html', 'styles', 'scripts'])
-gulp.task('default', ['assets', 'vendor', 'compile'])
-gulp.task('production', ['set-production', 'default'])
+gulp.task('default', ['assets', 'compile'])
