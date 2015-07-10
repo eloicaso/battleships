@@ -23,3 +23,9 @@ It is really easy!
 - Finally check your scores, have you a hawk eye?
 
 Good luck and have fun!
+
+# Credits:
+
+- Inspiration from: https://github.com/instanceofpro/awesome-marionette
+- Also from: https://github.com/davidsulc/structuring-backbone-with-requirejs-and-marionette
+- Following this Contacts Page structure: https://github.com/dmytroyarmak/marionette-contact-manager
